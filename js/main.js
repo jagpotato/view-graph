@@ -48,19 +48,19 @@ const lineZ = new THREE.Line(lineZGeometry, lineZMaterial);
 scene.add(lineZ);
 */
 
-// 球体
+// グラフ
 //- y = ax^3 + bx^2 + cx + d
 const a = 0;
-const b = 4;
-const c = 3;
-const d = -5;
-const maxX = 50;
+const b = 1;
+const c = 0;
+const d = 0;
+const maxX = 2;
 const maxY = Math.abs(a * Math.pow(maxX, 3) + b * Math.pow(maxX, 2) + c * maxX + d);
 const maxZ = maxX;
 let y = 0;
 // const sphereGeometry = new THREE.SphereGeometry(0.1, 30, 30);
 // const sphereMaterial = new THREE.MeshPhongMaterial({color: 0x000000, wireframe: false, transparent: false, opacity: 0.3});
-// for ( let i = -maxX / 2; i <= maxX / 2; i += 0.1 ) {
+// for ( let i = -maxX; i <= maxX; i += 0.1 ) {
 //   const sphere = new THREE.Mesh(sphereGeometry, sphereMaterial);
 //   y = a * Math.pow(i, 3) + b * Math.pow(i, 2) + c * i + d;
 //   sphere.position.set(i, y, 0);
@@ -69,7 +69,7 @@ let y = 0;
 
 const lineGeometry = new THREE.Geometry();
 const lineMaterial = new THREE.LineBasicMaterial({color: 0x000000});
-for ( let i = -maxX / 2; i <= maxX / 2; i += 0.05 ) {
+for ( let i = -maxX; i <= maxX; i += 0.05 ) {
   y = a * Math.pow(i, 3) + b * Math.pow(i, 2) + c * i + d;
   lineGeometry.vertices.push(new THREE.Vector3(i, y, 0));
   const line = new THREE.Line(lineGeometry, lineMaterial);
@@ -78,34 +78,31 @@ for ( let i = -maxX / 2; i <= maxX / 2; i += 0.05 ) {
 
 // 矢印(座標軸)
 //- X軸
-let axisXLength = maxX;                         // 矢印の長さ
-const axisXHeadLength = axisXLength * 0.05;    // 矢印の頭の長さ
-const axisXHeadWidth = axisXHeadLength * 0.5;  // 矢印の頭の太さ
-axisXLength += axisXHeadLength * 3;            // 頭が全体の長さに含まれないように修正
-const directionX = new THREE.Vector3(1, 0, 0);             // 矢印の向き(X方向)
-const startX = new THREE.Vector3(-axisXLength / 2, 0, 0);  // 矢印の始点
+let axisXLength = maxX * 2;                     // 矢印の長さ
+const axisXHeadLength = axisXLength * 0.05;     // 矢印の頭の長さ
+const axisXHeadWidth = axisXHeadLength * 0.5;   // 矢印の頭の太さ
+const directionX = new THREE.Vector3(1, 0, 0);  // 矢印の向き(X方向)
+const startX = new THREE.Vector3(-maxX, 0, 0);  // 矢印の始点
 const colorX = 0xff0000;
-const axisX = new THREE.ArrowHelper(directionX, startX, axisXLength, colorX, axisXHeadLength, axisXHeadWidth);
+const axisX = new THREE.ArrowHelper(directionX, startX, axisXLength + axisXHeadLength * 2, colorX, axisXHeadLength, axisXHeadWidth);
 scene.add(axisX);
 //- Y軸
-let axisYLength = maxY;                         // 矢印の長さ
-const axisYHeadLength = axisYLength * 0.05;    // 矢印の頭の長さ
-const axisYHeadWidth = axisYHeadLength * 0.5;  // 矢印の頭の太さ
-axisYLength += axisYHeadLength * 3;            // 頭が全体の長さに含まれないように修正
-const directionY = new THREE.Vector3(0, 1, 0);             // 矢印の向き(Y方向)
-const startY = new THREE.Vector3(0, -axisYLength / 2, 0);  // 矢印の始点
+let axisYLength = maxY * 2;                     // 矢印の長さ
+const axisYHeadLength = axisXHeadLength;        // 矢印の頭の長さ
+const axisYHeadWidth = axisXHeadWidth;          // 矢印の頭の太さ
+const directionY = new THREE.Vector3(0, 1, 0);  // 矢印の向き(Y方向)
+const startY = new THREE.Vector3(0, -maxY, 0);  // 矢印の始点
 const colorY = 0x00ff00;
-const axisY = new THREE.ArrowHelper(directionY, startY, axisYLength, colorY, axisYHeadLength, axisYHeadWidth);
+const axisY = new THREE.ArrowHelper(directionY, startY, axisYLength + axisYHeadLength * 2, colorY, axisYHeadLength, axisYHeadWidth);
 scene.add(axisY);
 //- Z軸
-let axisZLength = maxZ;                         // 矢印の長さ
-const axisZHeadLength = axisZLength * 0.05;    // 矢印の頭の長さ
-const axisZHeadWidth = axisZHeadLength * 0.5;  // 矢印の頭の太さ
-axisZLength += axisZHeadLength * 3;            // 頭が全体の長さに含まれないように修正
-const directionZ = new THREE.Vector3(0, 0, 1);             // 矢印の向き(X方向)
-const startZ = new THREE.Vector3(0, 0, -axisXLength / 2);  // 矢印の始点
+let axisZLength = maxZ * 2;                     // 矢印の長さ
+const axisZHeadLength = axisXHeadLength;        // 矢印の頭の長さ
+const axisZHeadWidth = axisXHeadWidth;          // 矢印の頭の太さ
+const directionZ = new THREE.Vector3(0, 0, 1);  // 矢印の向き(X方向)
+const startZ = new THREE.Vector3(0, 0, -maxZ);  // 矢印の始点
 const colorZ = 0x0000ff;
-const axisZ = new THREE.ArrowHelper(directionZ, startZ, axisZLength, colorZ, axisZHeadLength, axisZHeadWidth);
+const axisZ = new THREE.ArrowHelper(directionZ, startZ, axisZLength + axisZHeadLength * 2, colorZ, axisZHeadLength, axisZHeadWidth);
 scene.add(axisZ);
 
 function deleteMesh(mesh, geometry, material) {
@@ -134,12 +131,12 @@ fontLoader.load('fonts/helvetiker_bold.typeface.json', function(font) {
   });
   const textXMaterial = new THREE.MeshPhongMaterial({color: colorX});
   const textX = new THREE.Mesh(textXGeometry, textXMaterial);
-  textX.position.set(axisXLength / 2, 0, 0);
+  textX.position.set(maxX + axisXHeadLength * 2, 0, 0);
   scene.add(textX);
   // Y
   const textYGeometry = new THREE.TextGeometry('Y', {
     font: font,
-    size: axisYLength / 20,
+    size: axisXLength / 20,
     height: 0,
     curveSegments: 0,
     bevelEnabled: true,
@@ -149,13 +146,13 @@ fontLoader.load('fonts/helvetiker_bold.typeface.json', function(font) {
   });
   const textYMaterial = new THREE.MeshPhongMaterial({color: colorY});
   const textY = new THREE.Mesh(textYGeometry, textYMaterial);
-  textY.position.set(0, axisYLength / 2, 0);
+  textY.position.set(0, maxY + axisYHeadLength * 2, 0);
   textY.rotation.set(0, 0, Math.PI / 2);
   scene.add(textY);
   // Z
   const textZGeometry = new THREE.TextGeometry('Z', {
     font: font,
-    size: axisZLength / 20,
+    size: axisXLength / 20,
     height: 0,
     curveSegments: 0,
     bevelEnabled: true,
@@ -165,7 +162,7 @@ fontLoader.load('fonts/helvetiker_bold.typeface.json', function(font) {
   });
   const textZMaterial = new THREE.MeshPhongMaterial({color: colorZ});
   const textZ = new THREE.Mesh(textZGeometry, textZMaterial);
-  textZ.position.set(0, 0, axisZLength / 2);
+  textZ.position.set(0, 0, maxZ + axisZHeadLength * 2);
   textZ.rotation.set(0, -Math.PI / 2, 0);
   scene.add(textZ);
 });
